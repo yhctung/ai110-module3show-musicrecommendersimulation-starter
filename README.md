@@ -125,6 +125,19 @@ Song C: "Sunrise City" (pop, happy, 0.82 energy, 0.84 valence, 0.18 acoustic)
   TOTAL: 0 points → Not recommended ✓
 ```
 
+### Maximum Possible Score
+
+The theoretical maximum score is **7.8 points**, achieved when:
+- Mood: exact match (+3.0)
+- Genre: exact match (+1.0)
+- Energy: perfect match, within typical range (+1.0)
+- Tempo: perfect match (+0.5)
+- Valence: optimal for mood (+0.5)
+- Danceability: active mood + max value (+0.5)
+- Acousticness: user likes acoustic + max value (+0.8)
+
+**In practice:** Real songs rarely hit all maxima. In Profile 2 (happy mood, pop genre), "Sunrise City" scores 6.09—high but not maximal. Even with exact mood + genre matches, secondary features can only add ~2–2.5 points combined.
+
 ### Final Ranking
 
 1. Score all songs using the algorithm above
