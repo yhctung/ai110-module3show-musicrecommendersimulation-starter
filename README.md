@@ -315,5 +315,9 @@ Write 1 to 2 paragraphs here about what you learned:
 - about how recommenders turn data into predictions
 - about where bias or unfairness could show up in systems like this
 
+**How Recommenders Turn Data Into Predictions:** Building Mood Food showed that recommenders are systems of weighted trade-offs. The three-tier architecture (mood gatekeeper, genre tiebreaker, secondary features) encodes what matters most. Explicit user intent (stating a mood) is a strong signal that doesn't require engagement history or collaborative filtering. The key insight: **simplicity and transparency often outperform complexity**—a clear mood-first system is easier to audit, test, and improve than a black-box engagement optimizer.
+
+**Where Bias Sneaks In:** Bias appears when we hide trade-offs. The energy range hard boundary silently excludes upbeat sad songs and locks out unconventional users. Absent features (popularity, artist reputation) leave the system blind to cultural context. Unbalanced weights (mood +3.0 vs. genre +1.0) mean mediocre sad songs beat excellent indie songs, reinforcing mood stereotypes. The fix: make trade-offs visible, testable with adversarial profiles, and adjustable for different user groups.
+
 
 
