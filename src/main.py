@@ -28,14 +28,75 @@ def main() -> None:
 
     recommendations = recommend_songs(user_prefs, songs, k=5)
 
-    print("\nTop recommendations:\n")
-    for rec in recommendations:
-        # You decide the structure of each returned item.
-        # A common pattern is: (song, score, explanation)
-        song, score, explanation = rec
-        print(f"{song['title']} - Score: {score:.2f}")
-        print(f"Because: {explanation}")
-        print()
+    print("\n" + "="*80)
+    print("TOP RECOMMENDATIONS FOR MOOD FOOD")
+    print("="*80)
+
+    for i, (song, score, explanation) in enumerate(recommendations, 1):
+        # Extract reasoning lines
+        explanation_lines = explanation.split('\n')
+        tier_reason = explanation_lines[0] if explanation_lines else ""
+        secondary_list = [line.strip() for line in explanation_lines[1:] if line.strip()]
+
+        # Left side: song info (25 chars), Right side: reasoning (54 chars)
+        left_width = 25
+        right_width = 54
+
+        print(f"\n┌{'─' * left_width}┬{'─' * right_width}┐")
+
+        # Title and tier reason
+        title = f"{i}. {song['title']}"
+        if len(title) > left_width - 2:
+            title = title[:left_width - 5] + "..."
+        print(f"│ {title:<{left_width - 2}} │ {tier_reason:<{right_width - 2}} │")
+
+        # Artist and first secondary
+        artist = f"{song['artist']}"
+        if secondary_list:
+            secondary = secondary_list[0]
+            if len(secondary) > right_width - 2:
+                secondary = secondary[:right_width - 5] + "..."
+            print(f"│ {artist:<{left_width - 2}} │ {secondary:<{right_width - 2}} │")
+        else:
+            print(f"│ {artist:<{left_width - 2}} │ {' ' * (right_width - 2)} │")
+
+        # Mood/genre and second secondary
+        mood_genre = f"{song['mood']} | {song['genre']}"
+        if len(mood_genre) > left_width - 2:
+            mood_genre = mood_genre[:left_width - 5] + "..."
+        if len(secondary_list) > 1:
+            secondary = secondary_list[1]
+            if len(secondary) > right_width - 2:
+                secondary = secondary[:right_width - 5] + "..."
+            print(f"│ {mood_genre:<{left_width - 2}} │ {secondary:<{right_width - 2}} │")
+        else:
+            print(f"│ {mood_genre:<{left_width - 2}} │ {' ' * (right_width - 2)} │")
+
+        # Score and remaining secondaries
+        score_str = f"Score: {score:.2f}"
+        if len(secondary_list) > 2:
+            secondary = secondary_list[2]
+            if len(secondary) > right_width - 2:
+                secondary = secondary[:right_width - 5] + "..."
+            print(f"│ {score_str:<{left_width - 2}} │ {secondary:<{right_width - 2}} │")
+        else:
+            print(f"│ {score_str:<{left_width - 2}} │ {' ' * (right_width - 2)} │")
+
+        # Additional secondary reasons (if any)
+        for secondary in secondary_list[3:]:
+            if len(secondary) > right_width - 2:
+                secondary = secondary[:right_width - 5] + "..."
+            print(f"│ {' ' * (left_width - 2)} │ {secondary:<{right_width - 2}} │")
+
+        print(f"└{'─' * left_width}┴{'─' * right_width}┘")
+
+    # Old format (commented out)
+    # print("\nTop recommendations:\n")
+    # for rec in recommendations:
+    #     song, score, explanation = rec
+    #     print(f"{song['title']} - Score: {score:.2f}")
+    #     print(f"Because: {explanation}")
+    #     print()
 
 
 if __name__ == "__main__":
