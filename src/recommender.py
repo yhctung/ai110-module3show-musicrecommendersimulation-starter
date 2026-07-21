@@ -194,10 +194,40 @@ def recommend_songs(user_prefs: Dict, songs: List[Dict], k: int = 5) -> List[Tup
         for song in songs
     ]
 
-    top_k = sorted(scored, key=lambda x: (-x[1], x[0]['title']))[:k]
+    # Apply diversity penalty: reduce score for songs from artists/genres already selected
+    # This prevents clustering (e.g., all top-5 from same artist or genre)
+    # Penalty: -0.25 per duplicate artist, -0.15 per duplicate genre
+    selected = []
+    seen_artists = set()
+    seen_genres = set()
+
+    for song, score, tier, secondary in sorted(scored, key=lambda x: (-x[1], x[0]['title'])):
+        if len(selected) >= k:
+            break
+
+        artist = song['artist'].lower()
+        genre = song['genre'].lower()
+        adjusted_score = score
+
+        if artist in seen_artists:
+            adjusted_score -= 0.25
+        if genre in seen_genres:
+            adjusted_score -= 0.15
+
+        # Include if adjusted score is positive or we need to fill remaining slots
+        if adjusted_score >= 0 or len(selected) < k:
+            selected.append((song, score, tier, secondary, adjusted_score))
+            seen_artists.add(artist)
+            seen_genres.add(genre)
+
+    # Re-sort by adjusted score to get final top-k
+    selected.sort(key=lambda x: (-x[4], x[0]['title']))
+    top_k = selected[:k]
+
+    # top_k = sorted(scored, key=lambda x: (-x[1], x[0]['title']))[:k]
 
     result = []
-    for s, sc, tier, secondary in top_k:
+    for s, sc, tier, secondary, _ in top_k:
         tier_line = ' | '.join(tier)
         secondary_lines = '\n  '.join(secondary)
         explanation = f"{tier_line}\n  {secondary_lines}" if secondary_lines else tier_line
