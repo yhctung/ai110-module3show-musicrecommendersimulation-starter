@@ -19,7 +19,7 @@ def main() -> None:
     # user_prefs = {"genre": "pop", "mood": "happy", "energy": 0.8}
     # user_prefs = {"favorite_genre": "pop", "favorite_mood": "happy", "target_energy": 0.8, "likes_acoustic": False}
 
-    # ADVERSARIAL PROFILES (see ADVERSARIAL_TEST_PROFILES.md)
+    # TEST PROFILES (see TEST_PROFILES.md)
     contradiction = {"favorite_mood": "sad", "favorite_genre": "pop", "target_energy": 0.9, "likes_acoustic": True}
     valence_bypass = {"favorite_mood": "happy", "favorite_genre": "pop", "target_energy": 0.75, "likes_acoustic": False}
     acoustic_integration = {"favorite_mood": "peaceful", "favorite_genre": "ambient", "target_energy": 0.3, "likes_acoustic": True}
@@ -90,7 +90,7 @@ def main() -> None:
 
         print(f"└{'─' * left_width}┴{'─' * right_width}┘")
 
-    # Old format (commented out)
+    # Old format
     # print("\nTop recommendations:\n")
     # for rec in recommendations:
     #     song, score, explanation = rec

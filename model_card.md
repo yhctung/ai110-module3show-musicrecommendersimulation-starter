@@ -2,12 +2,12 @@
 
 ## 1. Model Name  
 
+Give your model a short, descriptive name.  
+Example: **VibeFinder 1.0**  
+
 **Mood Food v1.0**
 
 A transparent, content-based music recommender that feeds your mood.
-
-Give your model a short, descriptive name.  
-Example: **VibeFinder 1.0**  
 
 ---
 
